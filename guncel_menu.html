@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Menü</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+    .accordion {
+      background-color: #e91e63; color: white; cursor: pointer;
+      padding: 18px; width: 100%; border: none; border-radius: 10px;
+      text-align: left; outline: none; font-size: 18px; transition: 0.3s;
+      margin-bottom: 10px;
+    }
+    .active, .accordion:hover { background-color: #c2185b; }
+    .panel {
+      padding: 0 18px; background-color: white; max-height: 0;
+      overflow: hidden; transition: max-height 0.3s ease-out;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .menu-item {
+      padding: 15px 0; border-bottom: 1px solid #ddd;
+    }
+    .menu-item h4 {
+      margin: 0 0 5px; display: flex;
+      justify-content: space-between; align-items: center;
+    }
+    .menu-item p { margin: 0 0 5px; font-size: 14px; color: #333; }
+    .menu-item strong { color: #e91e63; font-size: 16px; }
+    .menu-item button {
+      background: #4CAF50; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .menu-item button:hover { background: #388E3C; }
+
+    /* Sepet */
+    #cart-toggle {
+      position: fixed; bottom: 10px; right: 10px;
+      background: #e91e63; color: white; border: none;
+      padding: 10px 15px; border-radius: 50%; font-size: 24px;
+      cursor: pointer; z-index: 1000;
+    }
+    #cart-container {
+      display: none; position: fixed; bottom: 70px; right: 10px;
+      background: #fff; border: 1px solid #ccc; padding: 10px;
+      border-radius: 10px; width: 270px; max-height: 400px;
+      overflow: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    #cart-items div {
+      margin-bottom: 10px; border-bottom: 1px solid #ddd;
+      padding-bottom: 5px; position: relative;
+    }
+    .delete-btn {
+      position: absolute; top: 0; right: 0;
+      background: none; border: none; color: red;
+      font-size: 20px; cursor: pointer;
+    }
+    textarea {
+      width: 100%; margin-top: 10px; border-radius: 5px; padding: 5px;
+    }
+    .whatsapp-button {
+      margin-top: 10px; background-color: #25D366;
+      color: white; border: none; padding: 10px; width: 100%;
+      border-radius: 5px; cursor: pointer;
+    }
+    .clear-button {
+      margin-top: 5px; background-color: #f44336;
+      color: white; border: none; padding: 6px; width: 100%;
+      border-radius: 5px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🌯 Dürümons Menü</h2>
+
+  <button class="accordion">🥩 Et Menüler</button>
+  <div class="panel">
+    <div class="menu-item">
+      <h4>Aile Boyu Menü <button onclick="addToCart('Aile Boyu Menü', '4 Adet Et Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)', '950TL')">+</button></h4>
+      <p>4 Adet Et Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p>
+      <strong>950TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>3'lü Kafadar Menü <button onclick="addToCart('3\'lü Kafadar Menü', '3 Adet Et Döner Dürüm + İçecek (1 L.)', '650TL')">+</button></h4>
+      <p>3 Adet Et Döner Dürüm + İçecek (1 L.)</p>
+      <strong>650TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>İkiz Menü <button onclick="addToCart('İkiz Menü', '2 Adet Et Döner Dürüm + 2 Adet Ayran (30 cl.)', '400TL')">+</button></h4>
+      <p>2 Adet Et Döner Dürüm + 2 Adet Ayran (30 cl.)</p>
+      <strong>400TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>Double Menü <button onclick="addToCart('Double Menü', 'Et Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran (30 cl.)', '300TL')">+</button></h4>
+      <p>Et Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran (30 cl.)</p>
+      <strong>300TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>XL Dürüm Menü <button onclick="addToCart('XL Dürüm Menü', 'XL Et Dürüm + Patates + Ayran (30 cl.)', '300TL')">+</button></h4>
+      <p>XL Et Dürüm + Patates + Ayran (30 cl.)</p>
+      <strong>300TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>Tekli Menü <button onclick="addToCart('Tekli Menü', 'Et Döner Dürüm + Patates Kızartması + Ayran (20 cl.)', '280TL')">+</button></h4>
+      <p>Et Döner Dürüm + Patates Kızartması + Ayran (20 cl.)</p>
+      <strong>280TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>Döner Box Menü <button onclick="addToCart('Döner Box Menü', 'Et Döner Box + İçecek (20 cl.)', '300TL')">+</button></h4>
+      <p>Et Döner Box + İçecek (20 cl.)</p>
+      <strong>300TL</strong>
+    </div>
+  </div>
+<!-- 🍗 Tavuk Menüler -->
+<button class="accordion">🍗 Tavuk Menüler</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Aile Boyu Menü <button onclick="addToCart('Aile Boyu Menü (Tavuk)', '4 Tavuk Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)', '600TL')">+</button></h4>
+    <p>4 Adet Tavuk Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p>
+    <strong>600TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>3'lü Kafadar Menü <button onclick="addToCart('3\'lü Kafadar Menü (Tavuk)', '3 Tavuk Döner Dürüm + İçecek (1 L.)', '400TL')">+</button></h4>
+    <p>3 Adet Tavuk Döner Dürüm + İçecek (1 L.)</p>
+    <strong>400TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>İkiz Menü <button onclick="addToCart('İkiz Menü (Tavuk)', '2 Tavuk Döner Dürüm + 2 Ayran (30 cl.)', '280TL')">+</button></h4>
+    <p>2 Adet Tavuk Döner Dürüm + 2 Adet Ayran (30 cl.)</p>
+    <strong>280TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Double Menü <button onclick="addToCart('Double Menü (Tavuk)', 'Tavuk Döner Dürüm + Patates + Soğan Halkası + Nugget + Ayran (30 cl.)', '250TL')">+</button></h4>
+    <p>Tavuk Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran (30 cl.)</p>
+    <strong>250TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>XL Dürüm Menü <button onclick="addToCart('XL Dürüm Menü (Tavuk)', 'XL Tavuk Dürüm + Patates + Ayran (30 cl.)', '220TL')">+</button></h4>
+    <p>XL Tavuk Dürüm + Patates + Ayran (30 cl.)</p>
+    <strong>220TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Tekli Menü <button onclick="addToCart('Tekli Menü (Tavuk)', 'Tavuk Dürüm + Patates Kızartması + Ayran (30 cl.)', '200TL')">+</button></h4>
+    <p>Tavuk Dürüm + Patates Kızartması + Ayran (30 cl.)</p>
+    <strong>200TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Döner Box Menü <button onclick="addToCart('Döner Box Menü (Tavuk)', 'Tavuk Döner Box + Soğan Halkası + Lavaş + Coca-Cola (20 cl.)', '220TL')">+</button></h4>
+    <p>Tavuk Döner Box + Soğan Halkası + Lavaş + Coca-Cola (20 cl.)</p>
+    <strong>220TL</strong>
+  </div>
+</div>
+<!-- 🍛 İskender -->
+<button class="accordion">🍛 İskender</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>İskender (Tavuk Dönerden) <button onclick="addToCart('İskender (Tavuk)', 'Yoğurt, patates kızartması, domates, sos, lavaş', '220TL')">+</button></h4>
+    <p>Yoğurt, patates kızartması, domates, sos, lavaş</p>
+    <strong>220TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>İskender (Et Dönerden) <button onclick="addToCart('İskender (Et)', 'Et döner, özel sos, tırnak pide. Yoğurt, patates kızartması ile', '280TL')">+</button></h4>
+    <p>Et döner, özel sos, tırnak pide. Yoğurt, patates kızartması ile</p>
+    <strong>280TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Pilav Üstü (Et Dönerden) <button onclick="addToCart('Pilav Üstü (Et)', 'Et döner, pirinç pilavı. Patates kızartması, özel sos, lavaş ile', '280TL')">+</button></h4>
+    <p>Et döner, pirinç pilavı. Patates kızartması, özel sos, lavaş ile</p>
+    <strong>280TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Pilav Üstü (Tavuk Dönerden) <button onclick="addToCart('Pilav Üstü (Tavuk)', 'Patates kızartması, özel sos, lavaş ile', '180TL')">+</button></h4>
+    <p>Patates kızartması, özel sos, lavaş ile</p>
+    <strong>180TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Beyti (Et Dönerden) <button onclick="addToCart('Beyti (Et)', 'Kaşar peyniri, sıcak sos. Patates kızartması, yoğurt, pilav ile', '250TL')">+</button></h4>
+    <p>Kaşar peyniri, sıcak sos. Patates kızartması, yoğurt, pilav ile</p>
+    <strong>250TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Beyti (Tavuk Dönerden) <button onclick="addToCart('Beyti (Tavuk)', 'Patates kızartması, yoğurt, pilav, kaşar peyniri, sıcak sos', '180TL')">+</button></h4>
+    <p>Patates kızartması, yoğurt, pilav, kaşar peyniri, sıcak sos</p>
+    <strong>180TL</strong>
+  </div>
+</div>
+<!-- 🌯 Tavuk Dürümler -->
+<button class="accordion">🌯 Tavuk Dürümler</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Tavuk Döner Dürüm <button onclick="addToCart('Tavuk Döner Dürüm', 'Domates, turşu, patates kızartması, özel sos', '150TL')">+</button></h4>
+    <p>Domates, turşu, patates kızartması, özel sos</p>
+    <strong>150TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Special Tavuk Döner Dürüm <button onclick="addToCart('Special Tavuk Döner Dürüm', 'Patates kızartması, cheddar peyniri, kaşar peyniri, özel sos, turşu, domates', '180TL')">+</button></h4>
+    <p>Patates kızartması, cheddar peyniri, kaşar peyniri, özel sos, turşu, domates</p>
+    <strong>180TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>XL Tavuk Dürüm <button onclick="addToCart('XL Tavuk Dürüm', 'Patates kızartması, özel sos, lavaş ile', '180TL')">+</button></h4>
+    <p>Patates kızartması, özel sos, lavaş ile</p>
+    <strong>180TL</strong>
+  </div>
+</div>
+<!-- 🥩 Et Dürümler -->
+<button class="accordion">🥩 Et Dürümler</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Et Döner Dürüm <button onclick="addToCart('Et Döner Dürüm', 'Domates, turşu, patates kızartması, özel sos', '200TL')">+</button></h4>
+    <p>Domates, turşu, patates kızartması, özel sos</p>
+    <strong>200TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>XL Et Döner Dürüm <button onclick="addToCart('XL Et Döner Dürüm', 'Et döner, özel sos, patates kızartması', '240TL')">+</button></h4>
+    <p>Et döner, özel sos, patates kızartması</p>
+    <strong>240TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Special Et Döner Dürüm <button onclick="addToCart('Special Et Döner Dürüm', 'Et döner, kaşar peyniri, cheddar peyniri, turşu, domates', '275TL')">+</button></h4>
+    <p>Et döner, kaşar peyniri, cheddar peyniri, turşu, domates</p>
+    <strong>275TL</strong>
+  </div>
+</div>
+<!-- 🍔 Burgerler -->
+<button class="accordion">🍔 Burgerler</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Tavuk Döner Burger <button onclick="addToCart('Tavuk Döner Burger', 'Tavuk döner, cheddar peyniri', '120TL')">+</button></h4>
+    <p>Tavuk döner, cheddar peyniri</p>
+    <strong>120TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Et Döner Burger <button onclick="addToCart('Et Döner Burger', 'Et döner, özel sos, patates kızartması', '180TL')">+</button></h4>
+    <p>Et döner, özel sos, patates kızartması</p>
+    <strong>180TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Tombik Ekmek Arası Et Döner <button onclick="addToCart('Tombik Ekmek Arası Et Döner', 'Et döner, özel sos, patates kızartması', '150TL')">+</button></h4>
+    <p>Et döner, özel sos, patates kızartması</p>
+    <strong>150TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Tombik Ekmek Arası Tavuk Döner <button onclick="addToCart('Tombik Ekmek Arası Tavuk Döner', 'Tavuk döner, özel sos, patates kızartması', '120TL')">+</button></h4>
+    <p>Tavuk döner, özel sos, patates kızartması</p>
+    <strong>120TL</strong>
+  </div>
+</div>
+<!-- 🍟 Yan Ürünler -->
+<button class="accordion">🍟 Yan Ürünler</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Patates Kızartması <button onclick="addToCart('Patates Kızartması', 'Patates Kızartması (150 gr.) Parmak dilim', '60TL')">+</button></h4>
+    <p>Patates Kızartması (150 gr.) Parmak dilim</p>
+    <strong>60TL</strong>
+  </div>
+</div>
+<!-- 👶 Çocuk Menü -->
+<button class="accordion">👶 Çocuk Menü</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Çocuk Tavuk Menü <button onclick="addToCart('Çocuk Tavuk Menü', 'Döner Burger + Patates Kızartması + Capri-Sun Meyve Suyu', '180TL')">+</button></h4>
+    <p>Döner Burger + Patates Kızartması + Capri-Sun Meyve Suyu</p>
+    <strong>180TL</strong>
+  </div>
+  <div class="menu-item">
+    <h4>Çocuk Et Menü <button onclick="addToCart('Çocuk Et Menü', 'Et Döner + Patates Kızartması + Capri-Sun Meyve Suyu', '250TL')">+</button></h4>
+    <p>Et Döner + Patates Kızartması + Capri-Sun Meyve Suyu</p>
+    <strong>250TL</strong>
+  </div>
+</div>
+<!-- 🍮 Tatlılar -->
+<button class="accordion">🍮 Tatlılar</button>
+<div class="panel">
+  <div class="menu-item">
+    <h4>Sütlaç <button onclick="addToCart('Sütlaç', 'Süt ürünleri', '50TL')">+</button></h4>
+    <p>Süt ürünleri</p>
+    <strong>50TL</strong>
+  </div>
+</div>
+
+  <!-- Sepet Butonu -->
+  <button id="cart-toggle" onclick="toggleCart()">🛒</button>
+  <div id="cart-container">
+    <h4>🛒 Sepet</h4>
+    <div id="cart-items"></div>
+    <div id="cart-summary" style="margin-top: 10px;">
+  <strong>🧾 Toplam Ürün:</strong> <span id="total-count">0</span><br>
+  <strong>💵 Toplam Tutar:</strong> <span id="total-price">0 TL</span>
+</div>
+
+    <textarea id="note" placeholder="Sipariş notu..."></textarea>
+    <button class="whatsapp-button" onclick="sendToWhatsApp()">📩 Sipariş Ver (WhatsApp)</button>
+    <button class="clear-button" onclick="clearCart()">❌ Sepeti Temizle</button>
+  </div>
+
+  <script>
+    const accordions = document.querySelectorAll(".accordion");
+    accordions.forEach(btn => {
+      btn.addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+      });
+    });
+
+    let cart = [];
+
+    function addToCart(name, desc, price) {
+      cart.push({ name, desc, price });
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartBox = document.getElementById("cart-items");
+      cartBox.innerHTML = "";
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <strong>${item.name}</strong><br>
+          <small>${item.desc}</small><br>
+          <span>${item.price}</span>
+          <button class="delete-btn" onclick="removeFromCart(${index})">🗑️</button>
+        `;
+        cartBox.appendChild(div);
+        // Toplam Ürün ve Fiyat Hesapla
+const totalCount = cart.length;
+let totalPrice = 0;
+cart.forEach(item => {
+  const price = parseInt(item.price.replace("TL", "").trim());
+  totalPrice += price;
+});
+document.getElementById("total-count").textContent = totalCount;
+document.getElementById("total-price").textContent = totalPrice + " TL";
+
+      });
+    }
+
+    function sendToWhatsApp() {
+      const note = document.getElementById("note").value;
+      let message = "📦 Sipariş Özeti:%0A";
+
+      cart.forEach(item => {
+        message += `• ${item.name} - ${item.desc} - ${item.price}%0A`;
+      });
+
+      if (note.trim() !== "") {
+        message += `%0A📝 Not: ${note}`;
+      }
+
+      const phone = "905525149333";
+      const url = `https://wa.me/${phone}?text=${message}`;
+      window.open(url, "_blank");
+    }
+
+    function toggleCart() {
+      const cartContainer = document.getElementById("cart-container");
+      if (cartContainer.style.display === "none" || cartContainer.style.display === "") {
+        cartContainer.style.display = "block";
+      } else {
+        cartContainer.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
