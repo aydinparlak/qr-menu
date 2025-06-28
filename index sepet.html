@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Menü</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+    .accordion {
+      background-color: #e91e63; color: white; cursor: pointer;
+      padding: 18px; width: 100%; border: none; border-radius: 10px;
+      text-align: left; outline: none; font-size: 18px; transition: 0.3s;
+      margin-bottom: 10px;
+    }
+    .active, .accordion:hover { background-color: #c2185b; }
+    .panel {
+      padding: 0 18px; background-color: white; max-height: 0;
+      overflow: hidden; transition: max-height 0.3s ease-out;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .menu-item {
+      padding: 15px 0; border-bottom: 1px solid #ddd;
+    }
+    .menu-item h4 {
+      margin: 0 0 5px; display: flex;
+      justify-content: space-between; align-items: center;
+    }
+    .menu-item p { margin: 0 0 5px; font-size: 14px; color: #333; }
+    .menu-item strong { color: #e91e63; font-size: 16px; }
+    .menu-item button {
+      background: #4CAF50; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .menu-item button:hover { background: #388E3C; }
+
+    /* Sepet */
+    #cart-container {
+      position: fixed; bottom: 10px; right: 10px;
+      background: #fff; border: 1px solid #ccc; padding: 10px;
+      border-radius: 10px; width: 270px; max-height: 400px;
+      overflow: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    #cart-items div {
+      margin-bottom: 10px; border-bottom: 1px solid #ddd;
+      padding-bottom: 5px; position: relative;
+    }
+    .delete-btn {
+      position: absolute; top: 0; right: 0;
+      background: none; border: none; color: red;
+      font-size: 20px; cursor: pointer;
+    }
+    textarea {
+      width: 100%; margin-top: 10px; border-radius: 5px; padding: 5px;
+    }
+    .whatsapp-button {
+      margin-top: 10px; background-color: #25D366;
+      color: white; border: none; padding: 10px; width: 100%;
+      border-radius: 5px; cursor: pointer;
+    }
+    .clear-button {
+      margin-top: 5px; background-color: #f44336;
+      color: white; border: none; padding: 6px; width: 100%;
+      border-radius: 5px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📋 QR Menü</h2>
+
+  <!-- Örnek Kategori: Tavuk Menüler -->
+  <button class="accordion">🍗 Tavuk Menüler</button>
+  <div class="panel">
+    <div class="menu-item">
+      <h4>Aile Boyu Menü <button onclick="addToCart('Aile Boyu Menü', '4 Tavuk Dürüm + Patates + 1L İçecek', '600TL')">+</button></h4>
+      <p>4 Tavuk Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p>
+      <strong>600TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>3'lü Kafadar Menü <button onclick="addToCart('3\'lü Kafadar Menü', '3 Tavuk Döner Dürüm + 1L İçecek', '400TL')">+</button></h4>
+      <p>3 Tavuk Döner Dürüm + İçecek (1 L.)</p>
+      <strong>400TL</strong>
+    </div>
+    <div class="menu-item">
+      <h4>İkiz Menü <button onclick="addToCart('İkiz Menü', '2 Tavuk Dürüm + 2 Ayran (30cl)', '280TL')">+</button></h4>
+      <p>2 Tavuk Döner Dürüm + 2 Ayran (30 cl.)</p>
+      <strong>280TL</strong>
+    </div>
+  </div>
+
+  <!-- Sepet Alanı -->
+  <div id="cart-container">
+    <h4>🛒 Sepet</h4>
+    <div id="cart-items"></div>
+    <textarea id="note" placeholder="Sipariş notu..."></textarea>
+    <button class="whatsapp-button" onclick="sendToWhatsApp()">📩 Sipariş Ver (WhatsApp)</button>
+    <button class="clear-button" onclick="clearCart()">❌ Sepeti Temizle</button>
+  </div>
+
+  <script>
+    const accordions = document.querySelectorAll(".accordion");
+    accordions.forEach(btn => {
+      btn.addEventListener("click", function () {
+        this.classList.toggle("active");
+        const panel = this.nextElementSibling;
+        panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+      });
+    });
+
+    let cart = [];
+
+    function addToCart(name, desc, price) {
+      cart.push({ name, desc, price });
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartBox = document.getElementById("cart-items");
+      cartBox.innerHTML = "";
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <strong>${item.name}</strong><br>
+          <small>${item.desc}</small><br>
+          <span>${item.price}</span>
+          <button class="delete-btn" onclick="removeFromCart(${index})">🗑️</button>
+        `;
+        cartBox.appendChild(div);
+      });
+    }
+
+    function sendToWhatsApp() {
+      const note = document.getElementById("note").value;
+      let message = "📦 Sipariş Özeti:%0A";
+
+      cart.forEach(item => {
+        message += `• ${item.name} - ${item.desc} - ${item.price}%0A`;
+      });
+
+      if (note.trim() !== "") {
+        message += `%0A📝 Not: ${note}`;
+      }
+
+      const phone = "905525149333";
+      const url = `https://wa.me/${phone}?text=${message}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>

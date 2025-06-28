@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>🛠️ Admin Paneli</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    input, textarea {
+      width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px; background: #4CAF50; color: white;
+      border: none; border-radius: 5px; cursor: pointer;
+    }
+    button:hover { background: #388E3C; }
+    .product { background: #fff; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .product-actions { margin-top: 5px; }
+    .delete-btn { background: #f44336; margin-right: 10px; }
+    .update-btn { background: #2196F3; }
+  </style>
+</head>
+<body>
+
+  <h2>🛠️ Admin Paneli</h2>
+
+  <input type="text" id="category" placeholder="Kategori (örn: Et Menüler)">
+  <input type="text" id="name" placeholder="Ürün Adı (örn: Aile Boyu Menü)">
+  <textarea id="desc" placeholder="Ürün açıklaması"></textarea>
+  <input type="text" id="price" placeholder="Fiyat (örn: 950TL)">
+  <button onclick="saveProduct()">💾 Ürünü Kaydet</button>
+
+  <h3>📦 Eklenen Ürünler</h3>
+  <div id="product-list"></div>
+
+  <script>
+    let editingIndex = -1;
+
+    function getProducts() {
+      return JSON.parse(localStorage.getItem("products") || "[]");
+    }
+
+    function setProducts(products) {
+      localStorage.setItem("products", JSON.stringify(products));
+    }
+
+    function saveProduct() {
+      const category = document.getElementById("category").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const desc = document.getElementById("desc").value.trim();
+      const price = document.getElementById("price").value.trim();
+
+      if (!category || !name || !desc || !price) {
+        alert("Lütfen tüm alanları doldurun.");
+        return;
+      }
+
+      const product = { category, name, desc, price };
+      let products = getProducts();
+
+      if (editingIndex >= 0) {
+        products[editingIndex] = product;
+        editingIndex = -1;
+      } else {
+        products.push(product);
+      }
+
+      setProducts(products);
+      clearForm();
+      listProducts();
+    }
+
+    function clearForm() {
+      document.getElementById("category").value = "";
+      document.getElementById("name").value = "";
+      document.getElementById("desc").value = "";
+      document.getElementById("price").value = "";
+    }
+
+    function listProducts() {
+      const products = getProducts();
+      const list = document.getElementById("product-list");
+      list.innerHTML = "";
+
+      products.forEach((p, index) => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <strong>${p.category} / ${p.name}</strong><br>
+          <small>${p.desc}</small><br>
+          <span>${p.price}</span>
+          <div class="product-actions">
+            <button class="update-btn" onclick="editProduct(${index})">🖊️ Güncelle</button>
+            <button class="delete-btn" onclick="deleteProduct(${index})">🗑️ Sil</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function editProduct(index) {
+      const products = getProducts();
+      const p = products[index];
+
+      document.getElementById("category").value = p.category;
+      document.getElementById("name").value = p.name;
+      document.getElementById("desc").value = p.desc;
+      document.getElementById("price").value = p.price;
+
+      editingIndex = index;
+    }
+
+    function deleteProduct(index) {
+      let products = getProducts();
+      if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+        products.splice(index, 1);
+        setProducts(products);
+        listProducts();
+      }
+    }
+
+    // Sayfa yüklendiğinde ürünleri göster
+    window.onload = listProducts;
+  </script>
+
+</body>
+</html>
