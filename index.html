@@ -5,241 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Menü</title>
   <style>
-    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
-    .accordion { background-color: #e91e63; color: white; cursor: pointer; padding: 18px; width: 100%; border: none; border-radius: 10px; text-align: left; outline: none; font-size: 18px; transition: 0.3s; margin-bottom: 10px; }
-    .active, .accordion:hover { background-color: #c2185b; }
-    .panel { padding: 0 18px; background-color: white; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; border-radius: 0 0 10px 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .menu-item { padding: 15px 0; border-bottom: 1px solid #ddd; }
-    .menu-item h4 { margin: 0 0 5px; }
-    .menu-item p { margin: 0 0 5px; font-size: 14px; color: #333; }
-    .menu-item strong { color: #e91e63; font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    .menu-item {
+      background: white;
+      border-radius: 10px;
+      margin: 15px 0;
+      padding: 15px 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    .menu-item h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .menu-item p {
+      margin: 5px 0 10px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .menu-item strong {
+      color: #e91e63;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+  <h1>📋 Restoran QR Menü</h1>
 
-  <h2>QR Menü</h2>
+  <!-- Et Menüler -->
+  <section>
+    <h2>🥩 Et Menüler</h2>
+    <div class="menu-item"><h3>Aile Boyu Menü</h3><p>4 Adet Et Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p><strong>950TL</strong></div>
+    <div class="menu-item"><h3>3'lü Kafadar Menü</h3><p>3 Adet Et Döner Dürüm + İçecek (1 L.)</p><strong>650TL</strong></div>
+    <div class="menu-item"><h3>İkiz Menü</h3><p>2 Adet Et Döner Dürüm + 2 Adet Ayran (30 cl.)</p><strong>400TL</strong></div>
+    <div class="menu-item"><h3>Double Menü</h3><p>Et Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran</p><strong>300TL</strong></div>
+    <div class="menu-item"><h3>XL Dürüm Menü</h3><p>XL Et Dürüm + Patates + Ayran</p><strong>300TL</strong></div>
+    <div class="menu-item"><h3>Tekli Menü</h3><p>Et Döner Dürüm + Patates Kızartması + Ayran (20 cl.)</p><strong>280TL</strong></div>
+    <div class="menu-item"><h3>Döner Box Menü</h3><p>Et Döner Box + İçecek (20 cl.)</p><strong>300TL</strong></div>
+  </section>
 
-  <!-- Et Menüler Başlık -->
-  <button class="accordion">Et Menüler</button>
-  <div class="panel">
-    <div class="menu-item">
-      <h4>Aile Boyu Menü</h4>
-      <p>4 Adet Et Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p>
-      <strong>950TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>3'lü Kafadar Menü</h4>
-      <p>3 Adet Et Döner Dürüm + İçecek (1 L.)</p>
-      <strong>650TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>İkiz Menü</h4>
-      <p>2 Adet Et Döner Dürüm + 2 Adet Ayran (30 cl.)</p>
-      <strong>400TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>Double Menü</h4>
-      <p>Et Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran (30 cl.)</p>
-      <strong>300TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>XL Dürüm Menü</h4>
-      <p>XL Et Dürüm + Patates + Ayran (30 cl.)</p>
-      <strong>300TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>Tekli Menü</h4>
-      <p>Et Döner Dürüm + Patates Kızartması + Ayran (20 cl.)</p>
-      <strong>280TL</strong>
-    </div>
-    <div class="menu-item">
-      <h4>Döner Box Menü</h4>
-      <p>Et Döner Box + İçecek (20 cl.)</p>
-      <strong>300TL</strong>
-    </div>
-  </div>
-<!-- Tavuk Menüler Başlık -->
-<button class="accordion">Tavuk Menüler</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Aile Boyu Menü</h4>
-    <p>4 Adet Tavuk Dürüm + Patates Kızartması (Büyük Boy) + İçecek (1 L.)</p>
-    <strong>600TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>3'lü Kafadar Menü</h4>
-    <p>3 Adet Tavuk Döner Dürüm + İçecek (1 L.)</p>
-    <strong>400TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>İkiz Menü</h4>
-    <p>2 Adet Tavuk Döner Dürüm + 2 Adet Ayran (30 cl.)</p>
-    <strong>280TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Double Menü</h4>
-    <p>Tavuk Döner Dürüm + Patates Kızartması + Soğan Halkası + Nugget + Ayran (30 cl.)</p>
-    <strong>250TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>XL Dürüm Menü</h4>
-    <p>XL Tavuk Dürüm + Patates + Ayran (30 cl.)</p>
-    <strong>220TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Tekli Menü</h4>
-    <p>Tavuk Dürüm + Patates Kızartması + Ayran (30 cl.)</p>
-    <strong>200TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Döner Box Menü</h4>
-    <p>Tavuk Döner Box + Soğan Halkası + Lavaş + Coca-Cola (20 cl.)</p>
-    <strong>220TL</strong>
-  </div>
-</div>
-<!-- İskender Başlık -->
-<button class="accordion">İskender</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>İskender (Tavuk Dönerden)</h4>
-    <p>Yoğurt, patates kızartması, domates, sos, lavaş</p>
-    <strong>220TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>İskender (Et Dönerden)</h4>
-    <p>Et döner, özel sos, tırnak pide. Yoğurt, patates kızartması ile</p>
-    <strong>280TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Pilav Üstü ( Et Dönerden )</h4>
-    <p>Et döner, pirinç pilavı. Patates kızartması, özel sos, lavaş ile</p>
-    <strong>280TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Pilav Üstü ( Tavuk Dönerden )</h4>
-    <p>Patates kızartması, özel sos, lavaş ile</p>
-    <strong>180TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Beyti ( Et Dönerden )</h4>
-    <p>Kaşar peyniri, sıcak sos. Patates kızartması, yoğurt, pilav ile</p>
-    <strong>250TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Beyti ( Tavuk Dönerden )</h4>
-    <p>Patates kızartması, yoğurt, pilav, kaşar peyniri, sıcak sos</p>
-    <strong>180TL</strong>
-  </div>
-</div>
-<!-- Tavuk Dürümler Başlık -->
-<button class="accordion">Tavuk Dürümler</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Tavuk Döner Dürüm</h4>
-    <p>Domates, turşu, patates kızartması, özel sos</p>
-    <strong>150TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Special Tavuk Döner Dürüm</h4>
-    <p>Patates kızartması, cheddar peyniri, kaşar peyniri, özel sos, turşu, domates</p>
-    <strong>180TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>XL Tavuk Dürüm</h4>
-    <p>Patates kızartması, özel sos, lavaş ile</p>
-    <strong>180TL</strong>
-  </div>
-</div>
-<!-- Et Dürümler Başlık -->
-<button class="accordion">Et Dürümler</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Et Döner Dürüm</h4>
-    <p>Domates, turşu, patates kızartması, özel sos</p>
-    <strong>200TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>XL Et Döner Dürüm</h4>
-    <p>Et döner, özel sos, patates kızartması</p>
-    <strong>240TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Special Et Döner Dürüm</h4>
-    <p>Et döner, kaşar peyniri, cheddar peyniri, turşu, domates</p>
-    <strong>275TL</strong>
-  </div>
-</div>
-<!-- Burgerler Başlık -->
-<button class="accordion">Burgerler</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Tavuk Döner Burger</h4>
-    <p>Tavuk döner, cheddar peyniri</p>
-    <strong>120TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Et Döner Burger</h4>
-    <p>Et döner, özel sos, patates kızartması</p>
-    <strong>180TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Tombik Ekmek Arası Et Döner</h4>
-    <p>Et döner, özel sos, patates kızartması</p>
-    <strong>150TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Tombik Ekmek Arası Tavuk Döner</h4>
-    <p>Tavuk döner, özel sos, patates kızartması</p>
-    <strong>120TL</strong>
-  </div>
-</div>
-<!-- Yan Ürünler Başlık -->
-<button class="accordion">Yan Ürünler</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Patates Kızartması</h4>
-    <p>Patates Kızartması (150 gr.) Parmak dilim</p>
-    <strong>60TL</strong>
-  </div>
-</div>
-<!-- Çocuk Menü Başlık -->
-<button class="accordion">Çocuk Menü</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Çocuk Tavuk Menü</h4>
-    <p>Döner Burger + Patates Kızartması + Capri-Sun Meyve Suyu</p>
-    <strong>180TL</strong>
-  </div>
-  <div class="menu-item">
-    <h4>Çocuk Et Menü</h4>
-    <p>Et Döner + Patates Kızartması + Capri-Sun Meyve Suyu</p>
-    <strong>250TL</strong>
-  </div>
-</div>
-<!-- Tatlılar Başlık -->
-<button class="accordion">Tatlılar</button>
-<div class="panel">
-  <div class="menu-item">
-    <h4>Sütlaç</h4>
-    <p>Süt ürünleri</p>
-    <strong>50TL</strong>
-  </div>
-</div>
+  <!-- Tavuk Menüler -->
+  <section>
+    <h2>🍗 Tavuk Menüler</h2>
+    <div class="menu-item"><h3>Aile Boyu Menü</h3><p>4 Adet Tavuk Dürüm + Patates Kızartması (Büyük Boy) + İçecek</p><strong>600TL</strong></div>
+    <div class="menu-item"><h3>3'lü Kafadar Menü</h3><p>3 Adet Tavuk Döner Dürüm + İçecek</p><strong>400TL</strong></div>
+    <div class="menu-item"><h3>İkiz Menü</h3><p>2 Adet Tavuk Döner Dürüm + 2 Adet Ayran (30 cl.)</p><strong>280TL</strong></div>
+    <div class="menu-item"><h3>Double Menü</h3><p>Tavuk Döner Dürüm + Patates + Soğan Halkası + Nugget + Ayran</p><strong>250TL</strong></div>
+    <div class="menu-item"><h3>XL Dürüm Menü</h3><p>XL Tavuk Dürüm + Patates + Ayran</p><strong>220TL</strong></div>
+    <div class="menu-item"><h3>Tekli Menü</h3><p>Tavuk Dürüm + Patates + Ayran</p><strong>200TL</strong></div>
+    <div class="menu-item"><h3>Döner Box Menü</h3><p>Tavuk Döner Box + Soğan Halkası + Lavaş + Coca-Cola</p><strong>220TL</strong></div>
+  </section>
 
-  <script>
-    const accordions = document.querySelectorAll(".accordion");
-    accordions.forEach(btn => {
-      btn.addEventListener("click", function () {
-        this.classList.toggle("active");
-        const panel = this.nextElementSibling;
-        if (panel.style.maxHeight) {
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        }
-      });
-    });
-  </script>
+  <!-- Et Dürümler -->
+  <section>
+    <h2>🌯 Et Dürümler</h2>
+    <div class="menu-item"><h3>Et Döner Dürüm</h3><p>Domates, turşu, patates kızartması, özel sos</p><strong>200TL</strong></div>
+    <div class="menu-item"><h3>XL Et Döner Dürüm</h3><p>Et döner, özel sos, patates kızartması</p><strong>240TL</strong></div>
+    <div class="menu-item"><h3>Special Et Döner Dürüm</h3><p>Et döner, kaşar peyniri, cheddar peyniri, turşu, domates</p><strong>275TL</strong></div>
+  </section>
+
+  <!-- Burgerler -->
+  <section>
+    <h2>🍔 Burgerler</h2>
+    <div class="menu-item"><h3>Tavuk Döner Burger</h3><p>Tavuk döner, cheddar peyniri</p><strong>120TL</strong></div>
+    <div class="menu-item"><h3>Et Döner Burger</h3><p>Et döner, özel sos, patates kızartması</p><strong>180TL</strong></div>
+    <div class="menu-item"><h3>Tombik Ekmek Arası Et Döner</h3><p>Et döner, özel sos, patates kızartması</p><strong>150TL</strong></div>
+    <div class="menu-item"><h3>Tombik Ekmek Arası Tavuk Döner</h3><p>Tavuk döner, özel sos, patates kızartması</p><strong>120TL</strong></div>
+  </section>
+
+  <!-- Yan Ürünler -->
+  <section>
+    <h2>🍟 Yan Ürünler</h2>
+    <div class="menu-item"><h3>Patates Kızartması</h3><p>150 gr. Parmak dilim</p><strong>60TL</strong></div>
+  </section>
+
+  <!-- Çocuk Menü -->
+  <section>
+    <h2>👶 Çocuk Menüler</h2>
+    <div class="menu-item"><h3>Çocuk Tavuk Menü</h3><p>Döner Burger + Patates + Capri-Sun</p><strong>180TL</strong></div>
+    <div class="menu-item"><h3>Çocuk Et Menü</h3><p>Et Döner + Patates + Capri-Sun</p><strong>250TL</strong></div>
+  </section>
+
+  <!-- Tatlılar -->
+  <section>
+    <h2>🍮 Tatlılar</h2>
+    <div class="menu-item"><h3>Sütlaç</h3><p>Süt ürünleri</p><strong>50TL</strong></div>
+  </section>
 
 </body>
 </html>
